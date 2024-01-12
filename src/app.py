@@ -36,14 +36,52 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/user', methods=['GET'])
-def handle_hello():
+@app.route('/users', methods=['GET'])
+def get_all_users():
 
     response_body = {
-        "msg": "Hello, this is your GET /user response "
+        "msg": "Hello, this is your GET /users response "
     }
 
     return jsonify(response_body), 200
+@app.route('/people', methods=['GET'])
+def handle_get_all_people():
+
+    return "handlePeople"
+
+@app.route('/people<int:person_id>', methods =['PUT','GET'])
+def handle_get_one_person(person_id):
+    if request.method == 'GET':
+        user1 = People.query.get(person_id)
+        return jsonify(user1.serialize()),200
+    return 'person not found',404
+
+@app.route('/planets', methods=['GET'])
+def handle_get_all_planets():
+
+    return "handlePlanets"
+
+@app.route('/planets<int:planet_id>', methods =['PUT','GET'])
+def handle_get_one_planet(planet_id):
+    if request.method == 'GET':
+        planet1 = Planet.query.get(planet_id)
+        return jsonify(planet1.serialize()),200
+    return 'planet not found',404
+
+@app.route('/vehicles', methods=['GET'])
+def handle_get_all_vehicles():
+
+    return "handleVehicles"
+
+@app.route('/vehicles<int:vehicle_id>', methods =['PUT','GET'])
+def handle_get_one_vehicle(vehicle_id):
+    if request.method == 'GET':
+        vehicle1 = Vehicle.query.get(vehicle_id)
+        return jsonify(vehicle1.serialize()),200
+    return 'vehicle not found',404
+
+
+
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
